@@ -9,22 +9,12 @@ export default function SignIn(){
     const [user,setUser] = useState({user:'', pass:''})
     const navigate = useNavigate();
 
-    // useEffect = (()=>fetchData(),[])
-
-    // const fetchData = async () => {
-    //     try {            
-    //         const res = await axios.get(config.apiPath+'',config.headers())
-    //     } catch (error) {
-            
-    //     }
-    // }
     const handleSignIn = async () => {
         try {
             const url = config.apiPath + '/user/signIn'
-            console.log(url)
             const res = await axios.post(url,user)
             if(res.data.token !==  undefined){
-                localStorage.setItem('toekn',res.data.token);
+                localStorage.setItem('token',res.data.token);
                 navigate('/home')
             }
         } catch (e) {

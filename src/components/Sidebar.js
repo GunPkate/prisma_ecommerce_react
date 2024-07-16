@@ -1,4 +1,29 @@
+import axios from "axios";
+import { useEffect, useState } from "react"
+import config from "../config";
+import Swal from "sweetalert2";
+
 export default function Sidebar(){
+
+    useEffect(()=>{fetchData()},[])
+    const [user,setUser] = useState({ name: "" });
+
+    const fetchData = async () => {
+        try {
+            const res = await axios.get(config.apiPath+'/user/info',config.headers()) 
+            console.log(123)
+            if(res.data.result !== undefined){
+                console.log(res.data.result)
+                setUser(res.data.result);
+            }
+        } catch (e) {
+            Swal.fire({
+                title: 'error',
+                icon: 'error',
+                text: e.message
+            })
+        }
+    }
     return <>
 
   <aside class="main-sidebar sidebar-dark-primary elevation-4">
@@ -15,7 +40,7 @@ export default function Sidebar(){
             <img src="dist/img/user2-160x160.jpg" class="img-circle elevation-2" alt="User Image"/>
             </div>
             <div class="info">
-            <a href="#" class="d-block">Alexander Pierce</a>
+            <a href="#" class="d-block">{user.name}</a>
             </div>
         </div>
 
