@@ -15,7 +15,8 @@ export default function SignIn(){
             const res = await axios.post(url,user)
             if(res.data.token !==  undefined){
                 localStorage.setItem('token',res.data.token);
-                navigate('/home')
+                setTimeout(()=>
+                    navigate('/home'),1000)
             }
         } catch (e) {
             if(e.response.status === 401){
