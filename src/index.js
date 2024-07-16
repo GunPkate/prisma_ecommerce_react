@@ -1,20 +1,21 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
-import App from './App';
 import reportWebVitals from './reportWebVitals';
-import Hello from './Hello';
 import { RouterProvider,createBrowserRouter } from 'react-router-dom';
+import SignIn from './page/backoffice/SignIn';
+import Home from './page/backoffice/Home';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <App/>
-  },{
-    path: "/hello",
-    element: <Hello/>
+    element: <SignIn/>
+  },
+  {
+    path: "/home",
+    element: <Home/>
   }
 ])
 root.render(
