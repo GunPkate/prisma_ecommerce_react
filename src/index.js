@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import { RouterProvider,createBrowserRouter } from 'react-router-dom';
 import SignIn from './page/backoffice/SignIn';
 import Home from './page/backoffice/Home';
+import Product from './page/backoffice/Product';
+
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -16,6 +18,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Home/>
+  },
+  {
+    path: "/product",
+    element: <Product/>
   }
 ])
 root.render(
