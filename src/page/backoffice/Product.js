@@ -52,6 +52,39 @@ function Product(){
 
     }
 
+    async function handleRemove(item){
+        try{
+            const button = await Swal.fire({
+                text: "Remove Item",
+                title:"Remove",
+                icon: "question",
+                showCancelButton: true,
+                showConfirmButton: true
+            })
+
+            if(button.isConfirmed){
+                const url = config.apiPath+"/product/remove/"+item.id
+                console.log(url)
+                const res = await axios.delete(url, config.headers())
+                if(res.status === 200){
+                    Swal.fire({
+                        text: "Remove Success",
+                        title:"Remove",
+                        icon: "success",
+                    })
+                }
+
+                fetchData();
+            }
+        } catch (e) {
+            Swal.fire({
+                title: "error",
+                text: e.message,
+                icon: "error"
+            })
+        }
+    }
+
     function clearForm(){
         setProduct({
             name: "",
@@ -87,7 +120,7 @@ function Product(){
                             <td className="text-right">{x.cost}</td>
                             <td className="text-center">
                                 <button className="btn btn-warning"><i className="fa fa-edit"></i></button>
-                                <button className="btn btn-danger"><i className="fa fa-times"></i></button>
+                                <button className="btn btn-danger" onClick={(e)=>{handleRemove(x)}}><i className="fa fa-times"></i></button>
                             </td>
                         </tr>
                 ) : <></>}
