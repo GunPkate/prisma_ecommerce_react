@@ -8,11 +8,10 @@ export default function BackOffice(props) {
         <div className="wrapper">
             <Navbar/>
             <Sidebar/>
-            <div class="content-wrapper">
-                <div class="content-header">
-                    <div class="container-fluid">
-                                {props.children}
-
+            <div className="content-wrapper">
+                <div className="content-header">
+                    <div className="container-fluid">
+                        {props.children}
                     </div>
                 </div>
             </div>
