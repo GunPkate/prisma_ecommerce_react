@@ -8,6 +8,7 @@ import Swal from "sweetalert2";
 function Product(){
     const [product,setProduct] = useState({});
     const [productList,setProductList] = useState([]);
+    const [img,setImg] = useState();
 
     useEffect(()=>{fetchData()},[])
 
@@ -30,7 +31,7 @@ function Product(){
     async function handelSave(){
         try {
             let res;
-            product.img = "";
+            product.img = await handleUpload();
             product.cost = parseFloat(product.cost);
             product.price = parseFloat(product.price);
             if(product.id === undefined){
@@ -99,6 +100,40 @@ function Product(){
         })
     }
 
+    function selectedFile(file){
+        console.log(file)
+        if(file !== undefined){
+            if(file.length > 0){
+                setImg(file[0])
+            }
+        }
+    }
+
+    async function handleUpload(){
+        try {
+            const formData = new FormData()
+            formData.append('img',img)
+            console.log(2,img)
+            console.log(2,formData)
+            const res = await axios.post(config.apiPath+'/product/upload',formData, {
+                headers: {
+                    "Content-Type": 'multipart/form-data',
+                    'Authorization': localStorage.getItem('token')
+                }
+            });
+            if(res.data.newName !== undefined){
+                return res.data.newName;
+            }
+            
+        } catch (e) {
+            Swal.fire({
+                title: "error",
+                text: e.message,
+                icon: "error"
+            })
+        }
+    }
+
     return <BackOffice>
         <div className="h4">Product</div>
         
@@ -152,7 +187,7 @@ function Product(){
             </div>
             <div className="mt-3">
                 <div>Image</div>
-                <input value={product.image} className="form-control" type="file"/>
+                <input value={product.image} className="form-control" type="file" onChange={e => selectedFile(e.target.files)}/>
             </div>
 
             <div className="modal-footer">
