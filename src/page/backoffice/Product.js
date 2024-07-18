@@ -29,10 +29,15 @@ function Product(){
 
     async function handelSave(){
         try {
+            let res;
             product.img = "";
             product.cost = parseFloat(product.cost);
             product.price = parseFloat(product.price);
-            const res = await axios.post(config.apiPath+"/product/create", product, config.headers())
+            if(product.id === undefined){
+                res = await axios.post(config.apiPath+"/product/create", product, config.headers())
+            }else{
+                res = await axios.post(config.apiPath+"/product/update", product, config.headers())
+            }
             if(res.data.message ==="success"){
                 Swal.fire({
                     title: "succes",
@@ -41,7 +46,7 @@ function Product(){
                     timer: 1000
                 })
             }
-            
+            setProduct({})
         } catch (e) {
             Swal.fire({
                 title: "error",
@@ -119,7 +124,13 @@ function Product(){
                             <td className="text-right">{x.price}</td>
                             <td className="text-right">{x.cost}</td>
                             <td className="text-center">
-                                <button className="btn btn-warning"><i className="fa fa-edit"></i></button>
+                                <button className="btn btn-warning" 
+                                    data-toggle="modal"
+                                    data-target="#modalProduct"
+                                    onClick={(e)=>{setProduct(x)}}
+                                >
+                                    <i className="fa fa-edit"></i>
+                                </button>
                                 <button className="btn btn-danger" onClick={(e)=>{handleRemove(x)}}><i className="fa fa-times"></i></button>
                             </td>
                         </tr>
