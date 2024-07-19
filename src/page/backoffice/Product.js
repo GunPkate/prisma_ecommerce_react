@@ -48,6 +48,7 @@ function Product(){
                 })
             }
             setProduct({})
+            fetchData();
         } catch (e) {
             Swal.fire({
                 title: "error",
@@ -96,8 +97,9 @@ function Product(){
             name: "",
             price: "",
             cost: "",
-            image: ""
+            img: ""
         })
+        setImg();
     }
 
     function selectedFile(file){
@@ -131,6 +133,7 @@ function Product(){
                 text: e.message,
                 icon: "error"
             })
+            return "";
         }
     }
 
@@ -154,7 +157,12 @@ function Product(){
             <tbody>
                 {productList.length >0 ? productList.map((x,i)=>
                         <tr key={i}>
-                            <td className="text-center">{i+1}</td>
+                            <td className="text-center">
+                                {x.img?
+                                    <img className="img-fluid" style={{maxWidth:"500px"}} src={ config.apiPath+'/uploads/'+x.img }/>
+                                    :<></>
+                                }
+                            </td>
                             <td className="text-center">{x.name}</td>
                             <td className="text-right">{x.price}</td>
                             <td className="text-right">{x.cost}</td>
