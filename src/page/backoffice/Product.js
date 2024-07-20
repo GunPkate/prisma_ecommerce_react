@@ -52,6 +52,7 @@ function Product(){
             }
             setProduct({})
             fetchData();
+            document.getElementById('modalProduct').click()
         } catch (e) {
             Swal.fire({
                 title: "error",
@@ -131,7 +132,6 @@ function Product(){
             if(res.data.newName !== undefined){
                 return res.data.newName;
             }
-            
         } catch (e) {
             Swal.fire({
                 title: "error",
@@ -171,8 +171,7 @@ function Product(){
                 fetchData();
 
             }
-
-   
+            document.getElementById('modalExcel').click()
         } catch (e) {
             Swal.fire({
                 title: "error",
