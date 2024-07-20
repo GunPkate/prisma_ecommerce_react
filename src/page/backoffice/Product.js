@@ -183,6 +183,14 @@ function Product(){
         }
     }
 
+    const showImage = (product, fixWidth) => {
+        return  product.img?
+        <img className="img-fluid" alt="product" style={{maxWidth: fixWidth}} src={ config.apiPath+'/uploads/'+product.img }/>
+        :<></>     
+    }
+        
+    
+
     return <BackOffice>
         <div className="h4">Product</div>
         
@@ -207,10 +215,7 @@ function Product(){
                 {productList.length >0 ? productList.map((x,i)=>
                         <tr key={i}>
                             <td className="text-center">
-                                {x.img?
-                                    <img className="img-fluid" alt="product" style={{maxWidth:"500px"}} src={ config.apiPath+'/uploads/'+x.img }/>
-                                    :<></>
-                                }
+                                {showImage(x,"500px")}
                             </td>
                             <td className="text-center">{x.name}</td>
                             <td className="text-right">{x.price}</td>
@@ -241,6 +246,9 @@ function Product(){
             <div className="mt-3">
                 <div>Price</div>
                 <input value={product.price} className="form-control" onChange={(e)=>{setProduct({...product, price: e.target.value})}}/>
+            </div>
+            <div className="mt-3">
+                {showImage(product, "300px")}
             </div>
             <div className="mt-3">
                 <div>Image</div>
