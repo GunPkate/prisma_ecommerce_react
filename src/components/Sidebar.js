@@ -89,66 +89,16 @@ export default function Sidebar(){
                 </Link>
             </li>
             
-            <li className="nav-item">
-                <Link to="#" className="nav-link">
-                <i className="nav-icon fas fa-copy"></i>
+            <li className="nav-item menu-open">
+                <Link to="/order" className="nav-link">
+                <i className="nav-icon fas fa-box"></i>
                 <p>
-                    Layout Options
-                    <i className="fas fa-angle-left right"></i>
-                    <span className="badge badge-info right">6</span>
+                    Sale Order
+                    {/* <span className="right badge badge-danger">New</span> */}
                 </p>
                 </Link>
-                <ul className="nav nav-treeview">
-                <li className="nav-item">
-                    <Link to="pages/layout/top-nav.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Top Navigation</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/top-nav-sidebar.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Top Navigation + Sidebar</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/boxed.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Boxed</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/fixed-sidebar.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Fixed Sidebar</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/fixed-sidebar-custom.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Fixed Sidebar <small>+ Custom Area</small></p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/fixed-topnav.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Fixed Navbar</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/fixed-footer.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Fixed Footer</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/layout/collapsed-sidebar.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Collapsed Sidebar</p>
-                    </Link>
-                </li>
-                </ul>
             </li>
+
             <li className="nav-item">
                 <Link to="#" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie"></i>

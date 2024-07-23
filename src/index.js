@@ -6,6 +6,7 @@ import { RouterProvider,createBrowserRouter } from 'react-router-dom';
 import SignIn from './page/backoffice/SignIn';
 import Home from './page/backoffice/Home';
 import Product from './page/backoffice/Product';
+import Order from './page/backoffice/Order';
 
 
 
@@ -22,6 +23,10 @@ const router = createBrowserRouter([
   {
     path: "/product",
     element: <Product/>
+  },
+  {
+    path: "/order",
+    element: <Order/>
   }
 ])
 root.render(
