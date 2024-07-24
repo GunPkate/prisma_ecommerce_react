@@ -99,6 +99,15 @@ export default function Sidebar(){
                 </Link>
             </li>
 
+            <li className="nav-item menu-open">
+                <Link to="/dashboard" className="nav-link">
+                <i className="nav-icon fas fa-box"></i>
+                <p>
+                    Dashboard
+                </p>
+                </Link>
+            </li>
+
             <li className="nav-item">
                 <Link to="#" className="nav-link">
                 <i className="nav-icon fas fa-chart-pie"></i>

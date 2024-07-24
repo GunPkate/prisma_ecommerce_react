@@ -7,7 +7,7 @@ import SignIn from './page/backoffice/SignIn';
 import Home from './page/backoffice/Home';
 import Product from './page/backoffice/Product';
 import Order from './page/backoffice/Order';
-
+import Dashboard from './page/backoffice/DashBoard';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -27,6 +27,10 @@ const router = createBrowserRouter([
   {
     path: "/order",
     element: <Order/>
+  },
+  {
+    path: "/dashboard",
+    element: <Dashboard/>
   }
 ])
 root.render(
