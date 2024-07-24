@@ -3,15 +3,39 @@ import BackOffice from "../../components/BackOffice";
 import axios from "axios";
 import config from "../../config";
 import dayjs from "dayjs";
+import Modal from "../../components/Modal";
 
 export default function Order(){
     const [billsale,setBillSale] = useState();
+    const [billSaleDetail,setBillSaleDetail] = useState();
+    const [sum,setSum] = useState(0);
     useEffect(() => {fetchData()},[])
 
     const fetchData = async () =>{
-        const res = await axios.get(config.apiPath+'/sale/order')
-        if(res.data){
-            setBillSale(res.data.result)
+        try {
+            const res = await axios.get(config.apiPath+'/sale/order')
+            if(res.data){
+                setBillSale(res.data.result)
+            }
+            
+        } catch (e) {
+            
+        }
+    }
+
+    const viewDetail = async (id) => {
+        try {
+            const res = await axios.get(config.apiPath+'/sale/order/'+id)
+            if(res.data){
+                console.log(res.data.result)
+                setBillSaleDetail(res.data.result)
+                let sum = 0;
+                res.data.result.forEach(x => { sum += x.price});
+                setSum(sum);
+            }
+            
+        } catch (e) {
+            
         }
     }
     return <BackOffice>
@@ -36,7 +60,19 @@ export default function Order(){
                         <td>{x.address}</td>
                         <td>{dayjs(x.payDate).format('DD/MM/YYYY')}</td>
                         <td>{x.payTime}</td>
-                        <td><i className="fa fa-box"></i></td>
+                        <td className="row">
+                            <div className="orderBtn">
+                                <button 
+                                    data-toggle="modal" data-target="#modalOrderDetail" 
+                                    onClick={(e)=>{viewDetail(x.id)}}
+                                    className="btn btn-success"
+                                >
+                                <i className="fa fa-box mr-2"></i>
+                                    view
+                                </button>
+                            </div>
+
+                        </td>
                     </tr>
                 }):
                 <div className="text-center">
@@ -45,5 +81,40 @@ export default function Order(){
                 }
             </tbody>
         </table>
+
+        <Modal id="modalOrderDetail" title="Order Detail">
+
+            <table className="table table-striped mt-2">
+                <thead className="thead-dark">
+                    <tr>
+                        <th> ID </th>
+                        <th> Name </th>
+                        <th> Price </th>
+                        <th> QTY </th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    {billSaleDetail? billSaleDetail.map( (x) =>{
+                        return <tr>
+                            <td>{x.id}</td> 
+                            <td>{x.Product.name}</td>
+                            <td>{x.price}</td>
+                            <td> 1 </td>
+                        </tr>
+                    }):
+                    <div className="text-center">
+                        No Data
+                    </div>
+                    }
+                    <tr>
+                        <td colSpan={4} className="bg-black font-weight-bold text-center"> Total Sum {sum} THB </td> 
+                    </tr>
+                </tbody>
+            </table>
+
+           
+
+        </Modal>
     </BackOffice>
 }
