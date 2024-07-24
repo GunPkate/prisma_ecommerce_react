@@ -4,6 +4,7 @@ import axios from "axios";
 import config from "../../config";
 import dayjs from "dayjs";
 import Modal from "../../components/Modal";
+import Swal from "sweetalert2";
 
 export default function Order(){
     const [billsale,setBillSale] = useState();
@@ -19,7 +20,12 @@ export default function Order(){
             }
             
         } catch (e) {
-            
+            Swal.fire({
+                title: "error",
+                text: e.message,
+                icon: "error"
+            })
+            return "";
         }
     }
 
@@ -35,9 +41,68 @@ export default function Order(){
             }
             
         } catch (e) {
-            
+            Swal.fire({
+                title: "error",
+                text: e.message,
+                icon: "error"
+            })
+            return "";
         }
     }
+
+    async function updateStatus(id,status){
+        let res;
+        try {     
+            const btn = await Swal.fire({
+                text: `Confirm ${status}`,
+                title: `${status} ?` ,
+                icon: status === 'Pay' ? "info": status === 'In Transit'? "question": 'error',
+                showConfirmButton: true,
+                showCancelButton: true
+            })
+
+            if( btn.isConfirmed){
+
+                if(status === 'Pay'){
+                    res = await axios.get(config.apiPath + '/sale/orderUpdateStatusPay/'+ id,config.headers())
+                }
+                else if(status === 'In Transit'){
+                    res = await axios.get(config.apiPath + '/sale/orderUpdateStatusInTransit/'+ id,config.headers())
+                }
+                else if(status === 'Cancel'){
+                    res = await axios.get(config.apiPath + '/sale/orderUpdateStatusCancel/'+ id,config.headers())
+                }
+                
+                if(res.data.message === 'success'){
+                    Swal.fire({
+                        text: "Update Status Success",
+                        title: `Status ${status}` ,
+                        icon: "success",
+                    })
+                    fetchData();
+                    console.log(res.data)
+                }
+            }  
+            
+        } catch (e) {
+            Swal.fire({
+                title: "error",
+                text: e.message,
+                icon: "error"
+            })
+            return "";
+        }
+    }
+
+    function displayStatus(text){
+        let color = ''
+        if(text === 'wait'){ color = 'badge bg-dark' }
+        if(text === 'Pay'){ color = 'badge bg-warning' }
+        if(text === 'In Transit'){ color = 'badge bg-success' }
+        if(text === 'Cancel'){ color = 'badge bg-danger' }
+        return <div className={`${color}`}>{text}</div>
+    }
+
     return <BackOffice>
         Sale Orders
 
@@ -49,26 +114,58 @@ export default function Order(){
                     <th> Address </th>
                     <th> Pay Date </th>
                     <th> Pay Time </th>
+                    <th> Status </th>
                     <th> Action </th>
                 </tr>
             </thead>
             <tbody>
                 {billsale? billsale.map( (x) =>{
                     return <tr>
-                        <td>{x.customerName}</td> 
-                        <td>{x.customerPhone}</td>
-                        <td>{x.address}</td>
-                        <td>{dayjs(x.payDate).format('DD/MM/YYYY')}</td>
-                        <td>{x.payTime}</td>
+                        <td  className="align-middle" >{x.id} {x.customerName}</td> 
+                        <td  className="align-middle" >{x.customerPhone}</td>
+                        <td  className="align-middle" >{x.address}</td>
+                        <td  className="align-middle" >{dayjs(x.payDate).format('DD/MM/YYYY')}</td>
+                        <td  className="align-middle" >{x.payTime} </td>
+                        <td  className="align-middle" >{displayStatus(x.status)}</td>
                         <td className="row">
                             <div className="orderBtn">
                                 <button 
                                     data-toggle="modal" data-target="#modalOrderDetail" 
                                     onClick={(e)=>{viewDetail(x.id)}}
+                                    className="btn btn-info"
+                                >
+                                <i className="fa fa-list mr-2"></i>
+                                    view
+                                </button>
+                            </div>
+
+                            <div className="orderBtn">
+                                <button 
+                                    onClick={(e)=>{updateStatus(x.id,'Pay')}}
+                                    className="btn btn-warning"
+                                >
+                                <i className="fa fa-check mr-2"></i>
+                                    Pay
+                                </button>
+                            </div>
+
+                            <div className="orderBtn">
+                                <button 
+                                    onClick={(e)=>{updateStatus(x.id,'In Transit')}}
                                     className="btn btn-success"
                                 >
-                                <i className="fa fa-box mr-2"></i>
-                                    view
+                                <i className="fa fa-truck mr-2"></i>
+                                    In Transit
+                                </button>
+                            </div>
+
+                            <div className="orderBtn">
+                                <button 
+                                    onClick={(e)=>{updateStatus(x.id,'Cancel')}}
+                                    className="btn btn-danger"
+                                >
+                                <i className="fa fa-times mr-2"></i>
+                                    Cancel
                                 </button>
                             </div>
 
