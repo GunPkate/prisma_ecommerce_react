@@ -8,6 +8,7 @@ import Home from './page/backoffice/Home';
 import Product from './page/backoffice/Product';
 import Order from './page/backoffice/Order';
 import Dashboard from './page/backoffice/DashBoard';
+import Assignment from './page/backoffice/Assignment';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: "/dashboard",
     element: <Dashboard/>
+  },
+  {
+    path: "/assignment",
+    element: <Assignment/>
   }
 ])
 root.render(

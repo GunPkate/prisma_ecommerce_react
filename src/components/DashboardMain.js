@@ -1,5 +1,6 @@
-import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
+import { DragDropContext  } from "react-beautiful-dnd";
 import {useState} from "react"
+import DndContainer from "./DndContainer";
 
 export default function DashboardMain (){
 
@@ -8,16 +9,25 @@ export default function DashboardMain (){
       id: "1",
       subid: "11",
       message: "start", 
+      class: "todo"
     },
     {
       id: "2",
       subid: "12",
       message: "Middle", 
+      class: "todo"
     },
     {
       id: "3",
       subid: "13",
       message: "End", 
+      class: "todo"
+    },
+    {
+      id: "4",
+      subid: "14",
+      message: "Done", 
+      class: "done"
     }
   ]
   const [assignment,setAssignment] = useState(startMessage);
@@ -26,6 +36,7 @@ export default function DashboardMain (){
     const {destination, source, type} = results
     if(!destination){ return }
     if(source.droppableId === destination.droppableId && source.index === destination.index ){ return }
+    
     if(type){
       const reOrderedItem = [...assignment];
       const sourceIndex = source.index
@@ -41,34 +52,51 @@ export default function DashboardMain (){
     }
   }
   return <>
-    <DragDropContext onDragEnd={dragEnd} >
-      {assignment? assignment.map((x,index)=>{
-        return <>
-          <Droppable droppableId = {x.id}>
-            {(provided)=>
-              <div 
-                ref = {provided.innerRef}
-                {...provided.droppableProps}
-              >
-                <Draggable draggableId={x.subid} key={x.subid} index={index}>
-                {(provided)=>
-                  <div className="d-flex"
-                    {...provided.dragHandleProps}
-                    {...provided.draggableProps}
-                    ref={provided.innerRef}
-                  >
+    <div >
 
-                      <div> { x.message}  </div>
-                  </div> 
-                }
-                </Draggable>
+    <DragDropContext onDragEnd={dragEnd} className="bg-gradient-primary">
+        <div className="row">
 
-                {provided.placeholder}
+
+        <div className="bg-gradient-primary col-5 mx-auto my-4" style={{ minHeight:"250px"}}>
+          <div className="text-center">To Do</div>
+
+              <div>
+                <DndContainer dataList={assignment} classD="todo"/>
               </div>
-            }
-          </Droppable>
-        </>
-      }) : <></> }
+
+        </div>
+
+        <div className="bg-gradient-warning col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+          <div className="text-center">In Progress</div>
+
+              <div>
+                <DndContainer dataList={assignment} classD="ip"/>
+              </div>
+
+        </div>
+
+        <div className="bg-gradient-success col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+          <div className="text-center">Done</div>
+
+              <div>
+                <DndContainer dataList={assignment} classD="done"/>
+              </div>
+
+        </div>
+
+        <div className="bg-gradient-info col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+          <div className="text-center">Done</div>
+
+              <div> To Do {assignment.filter(x=>x.class==="todo").length} </div>
+              <div> In Progress {assignment.filter(x=>x.class==="ip").length} </div>
+              <div> Done {assignment.filter(x=>x.class==="done").length} </div>
+
+        </div>
+
+        </div>
     </DragDropContext>
+    
+    </div>
   </>
 }

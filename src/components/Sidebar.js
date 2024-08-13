@@ -78,7 +78,12 @@ export default function Sidebar(){
 
         <nav className="mt-2">
             <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
-            
+            <li className="nav-item">
+                    <Link to="/assignment" className="nav-link">
+                    <i className="nav-icon fas fa-table"></i>
+                    <p>Assignment</p>
+                    </Link>
+                </li>
             <li className="nav-item menu-open">
                 <Link to="/product" className="nav-link">
                 <i className="nav-icon fas fa-box"></i>
@@ -237,35 +242,7 @@ export default function Sidebar(){
                 </li>
                 </ul>
             </li>
-            <li className="nav-item">
-                <Link to="#" className="nav-link">
-                <i className="nav-icon fas fa-table"></i>
-                <p>
-                    Tables
-                    <i className="fas fa-angle-left right"></i>
-                </p>
-                </Link>
-                <ul className="nav nav-treeview">
-                <li className="nav-item">
-                    <Link to="pages/tables/simple.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>Simple Tables</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/tables/data.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>DataTables</p>
-                    </Link>
-                </li>
-                <li className="nav-item">
-                    <Link to="pages/tables/jsgrid.html" className="nav-link">
-                    <i className="far fa-circle nav-icon"></i>
-                    <p>jsGrid</p>
-                    </Link>
-                </li>
-                </ul>
-            </li>
+
            
             </ul>
         </nav>
