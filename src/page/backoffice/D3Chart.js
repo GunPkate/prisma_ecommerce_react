@@ -1,8 +1,9 @@
 import * as d3 from "d3";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function D3Chart(){
-    const ref = useRef();
+    let ref = useRef();
+
     var data = [
         {Country: "A", Value: .08167},
         {Country: "B", Value: .01492},
@@ -31,7 +32,13 @@ export default function D3Chart(){
         {Country: "Y", Value: .01971},
         {Country: "Z", Value: .00074}
       ];
-    useEffect(() => {
+
+    const data2 = data.filter(x=>x);
+    const [tempD,setTempD] = useState(data)
+    useEffect(() => { createChart(tempD) }, []);
+    
+    const createChart = (dataInput) =>{
+        
         // set the dimensions and margins of the graph
         const margin = { top: 30, right: 30, bottom: 70, left: 60 },
         width = 500 - margin.left - margin.right,
@@ -45,12 +52,12 @@ export default function D3Chart(){
         .attr("height", height + margin.top + margin.bottom)
         .append("g")
         .attr("transform", `translate(${margin.left},${margin.top})`);
-        
+
         // X axis
         const x = d3
             .scaleBand()
             .range([0, width])
-            .domain(data.map((d) => d.Country))
+            .domain(dataInput.map((d) => d.Country))
             .padding(0.2);
         svg
             .append("g")
@@ -67,7 +74,7 @@ export default function D3Chart(){
         // Bars
         svg
             .selectAll("mybar")
-            .data(data)
+            .data(dataInput)
             .join("rect")
             .attr("x", (d) => x(d.Country))
             .attr("y", (d) => y(d.Value))
@@ -75,9 +82,34 @@ export default function D3Chart(){
             .attr("height", (d) => height - y(d.Value))
             .attr("fill", "#5f0f40");
         
-    }, []);
+    }
 
-    return <div className="text-center my-auto">
-        <svg width={500} height={500} id="barchart" ref={ref} />;
+    const sortChart = () => {
+        let sortD = tempD
+        sortD.sort((u,v)=>u.Value-v.Value)
+        setTempD(sortD);
+        clearChart();
+        createChart(sortD);
+    }
+
+    const resetChart = () => {
+        setTempD(data2);
+        clearChart();
+        createChart(data2);
+    }
+
+    const clearChart = () => {
+        let d = document.getElementById("barchart")
+        d.firstChild.remove();
+    }
+
+    return <div >
+        <div className="text-center my-auto">
+            <button onClick={sortChart}>Sort</button>
+            <button onClick={resetChart}>Reset</button>
+        </div>
+        <div className="text-center my-auto">
+            <svg width={500} height={500} id="barchart" ref={ref} />
+        </div>
     </div> 
 };
