@@ -58,16 +58,16 @@ export default function DashboardMain (){
         <div className="row">
 
 
-        <div className="bg-gradient-primary col-5 mx-auto my-4" style={{ minHeight:"250px"}}>
+        <div className="bg-gradient-primary col-5 mx-auto my-4 border rounded-lg" style={{ minHeight:"250px"}}>
           <div className="text-center">To Do</div>
 
-              <div>
+              <div  >
                 <DndContainer dataList={assignment} classD="todo"/>
               </div>
 
         </div>
 
-        <div className="bg-gradient-warning col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+        <div className="bg-gradient-warning col-5 mx-auto my-4 border rounded-lg" style={{  minHeight:"250px"}}>
           <div className="text-center">In Progress</div>
 
               <div>
@@ -76,7 +76,7 @@ export default function DashboardMain (){
 
         </div>
 
-        <div className="bg-gradient-success col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+        <div className="bg-gradient-success col-5 mx-auto my-4 border rounded-lg" style={{  minHeight:"250px"}}>
           <div className="text-center">Done</div>
 
               <div>
@@ -85,7 +85,7 @@ export default function DashboardMain (){
 
         </div>
 
-        <div className="bg-gradient-info col-5 mx-auto my-4" style={{  minHeight:"250px"}}>
+        <div className="bg-gradient-info col-5 mx-auto my-4 border rounded-lg" style={{  minHeight:"250px"}}>
           <div className="text-center">Done</div>
 
               <div> To Do {assignment.filter(x=>x.class==="todo").length} </div>

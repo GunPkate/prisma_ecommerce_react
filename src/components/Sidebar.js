@@ -123,9 +123,9 @@ export default function Sidebar(){
                 </Link>
                 <ul className="nav nav-treeview">
                 <li className="nav-item">
-                    <Link to="pages/charts/chartjs.html" className="nav-link">
+                    <Link to="/stock" className="nav-link">
                     <i className="far fa-circle nav-icon"></i>
-                    <p>ChartJS</p>
+                    <p>Stock Chart</p>
                     </Link>
                 </li>
                 <li className="nav-item">

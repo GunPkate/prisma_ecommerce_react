@@ -9,6 +9,7 @@ import Product from './page/backoffice/Product';
 import Order from './page/backoffice/Order';
 import Dashboard from './page/backoffice/DashBoard';
 import Assignment from './page/backoffice/Assignment';
+import Stock from './page/backoffice/Stock';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
   {
     path: "/assignment",
     element: <Assignment/>
+  },
+  {
+    path: "/stock",
+    element: <Stock/>
   }
 ])
 root.render(
