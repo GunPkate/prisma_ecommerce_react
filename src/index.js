@@ -10,6 +10,7 @@ import Order from './page/backoffice/Order';
 import Dashboard from './page/backoffice/DashBoard';
 import Assignment from './page/backoffice/Assignment';
 import Stock from './page/backoffice/Stock';
+import Customer from './page/backoffice/Customer';
 
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
@@ -41,6 +42,10 @@ const router = createBrowserRouter([
   {
     path: "/stock",
     element: <Stock/>
+  },
+  {
+    path: "/customer",
+    element: <Customer/>
   }
 ])
 root.render(

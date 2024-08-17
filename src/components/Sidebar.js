@@ -112,6 +112,15 @@ export default function Sidebar(){
                 </p>
                 </Link>
             </li>
+            
+            <li className="nav-item menu-open">
+                <Link to="/customer" className="nav-link">
+                <i className="nav-icon fas fa-box"></i>
+                <p>
+                    Customer
+                </p>
+                </Link>
+            </li>
 
             <li className="nav-item">
                 <Link to="#" className="nav-link">
