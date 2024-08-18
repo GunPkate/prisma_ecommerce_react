@@ -43,19 +43,37 @@ export default function D3Map(prop){
             }
         })
         .attr(`fill-opacity`, (item) => {
-
             // console.log(item)
             if(!item.properties.name.includes('Bangkok')){
                 return Math.random();
             }else{
                 return .8
             }
-
         })
+        .attr(`id`, (item) => { return item.properties.name })
+        .on('click', item => {
+            let text = document.getElementById("info").innerHTML 
+            setLabel(item.target.id)
+            
+            if(item.target.id === text){ 
+                setLabel("Click") 
+            }
+            
+            let targetColor = document.getElementById(`${item.target.id}`)
+            // if(item.target.id !== text){
+            //     targetColor.setAttribute("fill", "#000");
+            //     targetColor.setAttribute("fill-opacity", "1");
+            // }else{
+            //     targetColor.setAttribute("fill", "#000");
+            //     targetColor.setAttribute("fill-opacity", "1");
+            // }
+ 
+        });
     }
 
     useEffect(() => { createMap([100.0, 12.2],2000) },[])
     
+    const [label,setLabel] = useState("Click");
     // const zoom = () => {
     //     removeMap()
     //     createMap([100.0, 12.2],4000) 
@@ -82,8 +100,17 @@ export default function D3Map(prop){
                 {/* <button onClick={()=>{zoom()}}>Zoom</button>
                 <button onClick={()=>{moveMap('L')}}>Left</button> */}
             </div>
-            <div className="text-center my-auto">
-                <svg width={svgX} height={svgY} id="map-container" ref={ref} />
+            <div >
+                
+                <div className="row text-center my-auto">
+                    <div className="col-2">
+                        <div className="mx-2 px-2 py-2 bg-info" id="info">{label}</div>
+                        </div>
+                        <div className="col-8">
+                            <svg width={svgX} height={svgY} id="map-container" ref={ref} />
+                        </div>
+                    <div className="col-2"></div>
+                </div>
             </div>
         </div>
 
