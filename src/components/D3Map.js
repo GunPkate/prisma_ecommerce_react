@@ -1,25 +1,26 @@
 import * as d3 from "d3";
 import { useEffect, useRef, useState } from "react";
-import { feature } from "topojson";
-import thaiGeo from "../componentMap/jp.geo.json"
-
-export default function D3Map(){
+import thaiGeo from "../componentMap/thai.geo.json"
+// https://stackblitz.com/edit/d3map-hdmhhx?file=index.ts,assets%2Fjapan.geo.json
+export default function D3Map(prop){
 
     // append the svg object to the body of the page
     const ref = useRef();
     const svgX = 600;
     const svgY = 600;
     const margin = {left:30, right:30, top:10, bottom: 10}
-    const centerPos = [137.0, 38.2];
-    const scale = 2000;
+    //JP cordinate
+    // const centerPos = [137.0, 38.2];
 
-    const projection = d3.geoMercator()
-    .center(centerPos)
-    .translate([svgX / 2, svgY / 2])
-    .scale(scale);
-    const path = d3.geoPath().projection(projection);
+    const createMap = ( centerPosInput, scaleInput) =>{
+            //Thai coordinate
 
-    const createMap = () =>{
+        let projection = d3.geoMercator()
+        .center(centerPosInput)
+        .translate([svgX / 2, svgY / 2])
+        .scale(scaleInput);
+        let path = d3.geoPath().projection(projection);
+        
         const svg = d3
             .select(ref.current)
 
@@ -34,20 +35,53 @@ export default function D3Map(){
    
         svg.selectAll('path').data(thaiGeo.features).enter().append('path').attr('d',path).attr(`stroke`, `#666`)
         .attr(`stroke-width`, 0.25)
-        .attr(`fill`, `#2566CC`)
+        .attr(`fill`, (item)=>{
+            if(!item.properties.name.includes('Bangkok')){
+                return `#2566CC`
+            }else{
+                return `#DC143C`
+            }
+        })
         .attr(`fill-opacity`, (item) => {
 
-            console.log(item)
+            // console.log(item)
+            if(!item.properties.name.includes('Bangkok')){
+                return Math.random();
+            }else{
+                return .8
+            }
 
-          return Math.random();
         })
     }
 
-    useEffect(() => { createMap() },[])
+    useEffect(() => { createMap([100.0, 12.2],2000) },[])
+    
+    // const zoom = () => {
+    //     removeMap()
+    //     createMap([100.0, 12.2],4000) 
+    // }
+
+    // const moveMap = (di) => {
+    //     const moveNum = 20 
+    //     if(di === 'L'){
+    //         // centerPos[1] += 20
+    //         // console.log(centerPos)
+    //     } 
+    //     createMap();
+    // }
+
+    // const removeMap = () => {
+    //     let d = document.getElementById("map-container")
+    //     console.log(d)
+    // }
 
     return <>
         <div className="text-center">
-            12345
+            {prop.children}
+            <div>
+                {/* <button onClick={()=>{zoom()}}>Zoom</button>
+                <button onClick={()=>{moveMap('L')}}>Left</button> */}
+            </div>
             <div className="text-center my-auto">
                 <svg width={svgX} height={svgY} id="map-container" ref={ref} />
             </div>
